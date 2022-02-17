@@ -2,7 +2,7 @@ package com.dbc;
 
 import java.util.Scanner;
 
-public class exe4 {
+public class Exe4 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

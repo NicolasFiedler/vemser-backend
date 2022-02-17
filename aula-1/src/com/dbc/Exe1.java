@@ -2,7 +2,7 @@ package com.dbc;
 
 import java.util.Scanner;
 
-public class exe1 {
+public class Exe1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String nome, cidade, estado;

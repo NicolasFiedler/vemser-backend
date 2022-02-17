@@ -2,7 +2,7 @@ package com.dbc;
 
 import java.util.Scanner;
 
-public class exe2 {
+public class Exe2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Float nota = 0f;

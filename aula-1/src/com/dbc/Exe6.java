@@ -3,7 +3,7 @@ package com.dbc;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class exe6 {
+public class Exe6 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

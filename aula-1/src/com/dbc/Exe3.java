@@ -2,7 +2,7 @@ package com.dbc;
 
 import java.util.Scanner;
 
-public class exe3 {
+public class Exe3 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Float valorTotal, valorPago;
