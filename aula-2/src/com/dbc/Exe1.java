@@ -14,6 +14,7 @@ public class Exe1 {
 
         System.out.println("\n\n\n\n\n\n\n\n\n\n " +
                 "Promocao de " + produto + "\n--------------------------");
+
         for (double i = 1, j = 0.05; i <= 10; i++, j += 0.05) {
             valorUni = valor - (valor * j);
             total = valorUni * i;
