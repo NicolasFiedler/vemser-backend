@@ -6,9 +6,9 @@ public class Contato {
                                                 //Quando entao ouvi uma misterisa voz em minha cabeca,
     public void imprimirContato(){              //e ela diza: "nao faca isso, se colega vai querer te matar".
         if (tipo == 1) {
-            System.out.printf("Telefone: %s\nContato: Residencial\nDescricao: %s\n", telefone, descricao);
+            System.out.printf("Telefone: %s\nContato: Residencial\nDescricao: %s\n\n", telefone, descricao);
         }else if (tipo == 2){
-            System.out.printf("Telefone: %s\nContato: Comercial\nDescricao: %s\n", telefone, descricao);
+            System.out.printf("Telefone: %s\nContato: Comercial\nDescricao: %s\n\n", telefone, descricao);
         }
     }
 }
