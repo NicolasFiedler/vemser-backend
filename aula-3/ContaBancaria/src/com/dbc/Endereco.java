@@ -13,9 +13,9 @@ public class Endereco {
             System.out.printf("%s, %s, %s, %s.\n", cidade, estado, cep, pais);
         }
         if (tipo == 1){
-            System.out.println("Endereco residencial.");
+            System.out.println("Endereco residencial.\n");
         } else if (tipo == 2) {
-            System.out.println("Endereco comercial");
+            System.out.println("Endereco comercial\n");
         }
     }
 }
