@@ -9,10 +9,44 @@ public class Cliente {
     }
 
 
-    public String nome, cpf;
-    public Contato[] contatos = new Contato[2];
-    public Endereco[] enderecos = new Endereco[2];
+    private String nome, cpf;
+    private Contato[] contatos = new Contato[2];
+    private Endereco[] enderecos = new Endereco[2];
 
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Contato[] getContatos() {
+        return contatos;
+    }
+
+    public void setContatos(Contato[] contatos) {
+        this.contatos = contatos;
+    }
+
+
+
+    public Endereco[] getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(Endereco[] enderecos) {
+        this.enderecos = enderecos;
+    }
 
 
     public void imprimirCliente(){

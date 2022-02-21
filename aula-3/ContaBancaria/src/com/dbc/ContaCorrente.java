@@ -11,12 +11,50 @@ public class ContaCorrente {
     }
 
 
-    public Cliente cliente;
-    public String numeroConta;
-    public Integer agencia = 1111;
-    public Double saldo, chequeEspecial = 200., valorChequeEspecial = chequeEspecial;
+    private Cliente cliente;
+    private String numeroConta;
+    private Integer agencia = 1111;
+    private Double saldo, chequeEspecial = 200., valorChequeEspecial = chequeEspecial;
 
+    public Cliente getCliente() {
+        return cliente;
+    }
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getNumeroConta() {
+        return numeroConta;
+    }
+
+    public void setNumeroConta(String numeroConta) {
+        this.numeroConta = numeroConta;
+    }
+
+    public Integer getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(Integer agencia) {
+        this.agencia = agencia;
+    }
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
+    public Double getChequeEspecial() {
+        return chequeEspecial;
+    }
+
+    public void setChequeEspecial(Double chequeEspecial) {
+        this.chequeEspecial = chequeEspecial;
+    }
 
     public void imprimirContaCorrente(){
         System.out.printf("Conta:   \t\t\t%s\n" +

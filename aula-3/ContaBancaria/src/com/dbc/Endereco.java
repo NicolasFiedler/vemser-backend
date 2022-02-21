@@ -23,8 +23,8 @@ public class Endereco {
     }
 
 
-    public Integer tipo, numero;
-    public String logradouro, pais, estado, cidade, cep, complemento = "";
+    private Integer tipo, numero;
+    private String logradouro, pais, estado, cidade, cep, complemento = "";
 
 
 

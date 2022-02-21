@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     private static ContaCorrente conta1, conta2;
-    static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -76,24 +76,28 @@ public class Main {
                                    "123.456.789-00",
                                    "12345678-9",
                                    500.);
-        conta1.cliente.contatos[0] = new Contato("91234-1234",
-                                                 1,
-                                                 "Se nao atender, deixar recado.");
-        conta1.cliente.enderecos[0] = new Endereco();
-        conta1.cliente.enderecos[1] = new Endereco();
+        Contato[] contatos = new Contato[2];
+
+        contatos[0] = new Contato("91234-1234",
+                1,
+                "Se nao atender, deixar recado.");
+
+        conta1.getCliente().setContatos(contatos);
+        conta1.getCliente().setEnderecos(new Endereco[2]);
 
         //Gerando conta 2
         conta2 = new ContaCorrente("Jorge",
                 "987.654.321-00",
                 "98765432-1",
                 500.);
-        conta2.cliente.contatos[0] = new Contato("94321-4321",
+        contatos[0] = new Contato("94321-4321",
                 2,
                 "Atendemos das 8:00 as 17:00");
-        conta2.cliente.contatos[1] = new Contato("94321-1234",
+        contatos[1] = new Contato("94321-1234",
                 1,
                 "");
-        conta2.cliente.enderecos[0] = new Endereco();
+        conta2.getCliente().setContatos(contatos);
+        conta2.getCliente().setEnderecos(new Endereco[2]);
     }
 
     public static void pressEnter(){

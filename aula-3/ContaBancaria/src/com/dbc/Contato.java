@@ -10,8 +10,8 @@ public class Contato {
     }
 
 
-    public String descricao = "", telefone;
-    public Integer tipo;
+    private String descricao = "", telefone;
+    private Integer tipo;
 
                                                 //Estava eu pensando num ternario pra deixar td em uma linha...
                                                 //Quando entao ouvi uma misterisa voz em minha cabeca,
