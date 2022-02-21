@@ -1,8 +1,19 @@
 package com.dbc;
 
 public class Contato {
+
+    public Contato(){}
+    public Contato(String telefone, Integer tipo, String descricao){
+        this.telefone = telefone;
+        this.tipo = tipo;
+        this.descricao = descricao;
+    }
+
+
     public String descricao = "", telefone;
-    public Integer tipo;                        //Estava eu pensando num ternario pra deixar td em uma linha...
+    public Integer tipo;
+
+                                                //Estava eu pensando num ternario pra deixar td em uma linha...
                                                 //Quando entao ouvi uma misterisa voz em minha cabeca,
     public void imprimirContato(){              //e ela diza: "nao faca isso, se colega vai querer te matar".
         if (tipo == null){
