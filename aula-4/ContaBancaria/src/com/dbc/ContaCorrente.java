@@ -4,6 +4,11 @@ public class ContaCorrente extends Conta implements Impressao{
 
     private Double chequeEspecial;
 
+    public ContaCorrente(String nome, String cpf, String numeroConta, String agencia, Double saldo, Double chequeEspecial) {
+        super(nome, cpf, numeroConta, agencia, saldo);
+        this.chequeEspecial = chequeEspecial;
+    }
+
     public Double getChequeEspecial() {
         return chequeEspecial;
     }
@@ -20,12 +25,14 @@ public class ContaCorrente extends Conta implements Impressao{
                 getNumeroConta(), getAgencia(), getSaldo(), getChequeEspecial());
         if (getCliente() != null){
             getCliente().imprimirCliente();
-        }    }
+        }
+    }
 
     @Override
     public Boolean sacar(Double valor){
-        if (valor <= retornarSaldoComChequeEspecial()){
+        if (valor <= retornarSaldoComChequeEspecial() && valor > 0){
             setSaldo(getSaldo() - valor);
+            return true;
         }
         return false;
     }
