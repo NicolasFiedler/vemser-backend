@@ -8,6 +8,14 @@ public abstract class Conta implements Movimentacao {
     private String numeroConta, agencia;
     private Double saldo;
 
+    public Conta () {}
+    public Conta(String nome, String cpf, String numeroConta, String agencia, Double saldo) {
+        this.cliente = new Cliente(nome, cpf);
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.saldo = saldo;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -42,7 +50,7 @@ public abstract class Conta implements Movimentacao {
 
     @Override
     public Boolean sacar (Double valor){
-        if (valor < saldo){
+        if (valor <= saldo && valor > 0){
             saldo -= valor;
             return true;
         }
