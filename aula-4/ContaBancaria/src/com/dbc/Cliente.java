@@ -38,8 +38,6 @@ public class Cliente {
         this.contatos = contatos;
     }
 
-
-
     public Endereco[] getEnderecos() {
         return enderecos;
     }
