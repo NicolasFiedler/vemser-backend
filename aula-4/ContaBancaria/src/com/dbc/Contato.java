@@ -13,6 +13,30 @@ public class Contato {
     private String descricao = "", telefone;
     private Integer tipo;
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
                                                 //Estava eu pensando num ternario pra deixar td em uma linha...
                                                 //Quando entao ouvi uma misterisa voz em minha cabeca,
     public void imprimirContato(){              //e ela diza: "nao faca isso, se colega vai querer te matar".
