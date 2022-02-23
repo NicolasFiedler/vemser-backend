@@ -1,7 +1,5 @@
 package com.dbc;
 
-import java.util.Stack;
-
 public class ContaDePagamento extends Conta implements Impressao{
     private final static Double TAXA_SAQUE = 4.25;
 
