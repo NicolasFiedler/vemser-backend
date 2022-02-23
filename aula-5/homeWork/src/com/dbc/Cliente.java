@@ -1,5 +1,7 @@
 package com.dbc;
 
+import java.util.ArrayList;
+
 public class Cliente {
 
     public Cliente(){}
@@ -10,9 +12,8 @@ public class Cliente {
 
 
     private String nome, cpf;
-    private Contato[] contatos = new Contato[2];
-    private Endereco[] enderecos = new Endereco[2];
-
+    private ArrayList<Contato> contatos = new ArrayList<>();
+    private ArrayList<Endereco> enderecos = new ArrayList<>();
 
     public String getNome() {
         return nome;
@@ -30,22 +31,21 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public Contato[] getContatos() {
+    public ArrayList<Contato> getContatos() {
         return contatos;
     }
 
-    public void setContatos(Contato[] contatos) {
+    public void setContatos(ArrayList<Contato> contatos) {
         this.contatos = contatos;
     }
 
-    public Endereco[] getEnderecos() {
+    public ArrayList<Endereco> getEnderecos() {
         return enderecos;
     }
 
-    public void setEnderecos(Endereco[] enderecos) {
+    public void setEnderecos(ArrayList<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
-
 
     public void imprimirCliente(){
         System.out.printf("Nome: %s \nCpf: %s\n\n", nome, cpf);
