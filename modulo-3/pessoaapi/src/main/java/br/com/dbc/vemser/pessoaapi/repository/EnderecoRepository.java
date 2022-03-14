@@ -31,11 +31,20 @@ public class EnderecoRepository {
                 .filter(endereco1 -> endereco1.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new Exception("Endereco nao encontrado."));
-        resultEndereco.
+        resultEndereco = endereco;
+        return resultEndereco;
     }
 
     public List<Endereco> list() {
         return enderecoList;
     }
 
+    public Endereco delete(Integer id) throws Exception {
+        Endereco endereco = enderecoList.stream()
+                .filter(endereco1 -> endereco1.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Endereco nao encontrado."));
+        enderecoList.remove(endereco);
+        return endereco;
+    }
 }
