@@ -1,12 +1,14 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+@Repository
 public class ContatoRepository {
     private List<Contato> contatoList = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();

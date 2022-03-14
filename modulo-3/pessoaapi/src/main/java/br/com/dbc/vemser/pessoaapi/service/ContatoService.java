@@ -2,16 +2,20 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ContatoService {
 
-    private final ContatoRepository contatoRepository;
+    @Autowired
+    private ContatoRepository contatoRepository;
 
-    public ContatoService () {
-        contatoRepository = new ContatoRepository();
-    }
+//    public ContatoService () {
+//        contatoRepository = new ContatoRepository();
+//    }
 
     public Contato create (Contato contato) {
         return contatoRepository.create(contato);
