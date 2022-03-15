@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,10 +15,10 @@ public class ContatoRepository {
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public ContatoRepository(){
-        contatoList.add(new Contato(COUNTER.incrementAndGet(), 1, "9876543212"));
-        contatoList.add(new Contato(COUNTER.incrementAndGet(), 2, "3452245725"));
-        contatoList.add(new Contato(COUNTER.incrementAndGet(), 2, "4688579678"));
-        contatoList.add(new Contato(COUNTER.incrementAndGet(), 3, "9875356730"));
+        contatoList.add(new Contato(COUNTER.incrementAndGet(), 1, "comercial", "9876543212"));
+        contatoList.add(new Contato(COUNTER.incrementAndGet(), 2,"comercial", "3452245725"));
+        contatoList.add(new Contato(COUNTER.incrementAndGet(), 2,"residencial", "4688579678"));
+        contatoList.add(new Contato(COUNTER.incrementAndGet(), 3,"comercial", "9875356730"));
     }
 
     public Contato create (Contato contato) {
@@ -34,7 +35,8 @@ public class ContatoRepository {
         Contato contatoRecuperado = contatoList.stream()
                 .filter(contato -> contato.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Contato nao encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Contato nao encontrado"));
+        contatoRecuperado.setTipo(contatoUpdate.getTipo());
         contatoRecuperado.setNumeroTelefone(contatoUpdate.getNumeroTelefone());
         return contatoRecuperado;
     }
@@ -43,7 +45,7 @@ public class ContatoRepository {
         Contato contatoRecuperado = contatoList.stream()
                 .filter(contato -> contato.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Contato nao encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Contato nao encontrado"));
         contatoList.remove(contatoRecuperado);
     }
 

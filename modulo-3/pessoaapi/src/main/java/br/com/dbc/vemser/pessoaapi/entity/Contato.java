@@ -1,16 +1,33 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class Contato {
     private Integer id;
     private Integer idPessoa;
+    @NotNull
+    private String tipo;
+    @NotEmpty
+    @Max(13)
     private String numeroTelefone;
 
     public Contato(){}
 
-    public Contato(Integer id, Integer idPessoa, String numeroTelefone) {
+    public Contato(Integer id, Integer idPessoa, String tipo, String numeroTelefone) {
         this.setId(id);
         this.setIdPessoa(idPessoa);
+        this.setTipo(tipo);
         this.setNumeroTelefone(numeroTelefone);
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Integer getId() {

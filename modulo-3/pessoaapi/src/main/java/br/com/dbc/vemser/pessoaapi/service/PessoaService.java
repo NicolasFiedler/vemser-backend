@@ -20,22 +20,22 @@ public class PessoaService {
 //    }
 
     public Pessoa create(Pessoa pessoa){
-        try{
-            if (StringUtils.isBlank(pessoa.getNome())) {
-                throw new Exception("Nome nao pode ficar em branco");
-            }
-            if (ObjectUtils.isEmpty(pessoa.getDataNascimento())) {
-                throw new Exception("Data de nascimento nao pode ficar em branco");
-            }
-            if (StringUtils.isBlank(pessoa.getCpf()) || (pessoa.getCpf().length() != 11 && StringUtils.isAlpha(pessoa.getCpf()))) {
-                throw new Exception("CPF invalido");
-            }
+//        try{
+//            if (StringUtils.isBlank(pessoa.getNome())) {
+//                throw new Exception("Nome nao pode ficar em branco");
+//            }
+//            if (ObjectUtils.isEmpty(pessoa.getDataNascimento())) {
+//                throw new Exception("Data de nascimento nao pode ficar em branco");
+//            }
+//            if (StringUtils.isBlank(pessoa.getCpf()) || (pessoa.getCpf().length() != 11 && StringUtils.isAlpha(pessoa.getCpf()))) {
+//                throw new Exception("CPF invalido");
+//            }
 
             return pessoaRepository.create(pessoa);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
     }
 
     public List<Pessoa> list(){

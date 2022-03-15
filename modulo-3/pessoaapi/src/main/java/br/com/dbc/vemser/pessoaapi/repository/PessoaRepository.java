@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public class PessoaRepository {
         Pessoa pessoaRecuperada = listaPessoas.stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não econtrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
@@ -50,7 +51,7 @@ public class PessoaRepository {
         Pessoa pessoaRecuperada = listaPessoas.stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não econtrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
         listaPessoas.remove(pessoaRecuperada);
     }
 

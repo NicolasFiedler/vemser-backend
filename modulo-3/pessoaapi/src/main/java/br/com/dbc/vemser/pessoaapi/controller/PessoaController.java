@@ -4,11 +4,14 @@ import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import br.com.dbc.vemser.pessoaapi.service.PropertieReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
 
@@ -28,7 +31,7 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public Pessoa create(@RequestBody Pessoa pessoa) {
+    public Pessoa create(@Valid @RequestBody Pessoa pessoa) {
         return pessoaService.create(pessoa);
     }
 
@@ -38,18 +41,18 @@ public class PessoaController {
     }
 
     @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<Pessoa> listByName(@RequestParam("nome") String nome) {
+    public List<Pessoa> listByName(@Valid @RequestParam("nome") String nome) {
         return pessoaService.listByName(nome);
     }
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-    public Pessoa update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody Pessoa pessoaAtualizar) throws Exception {
+    public Pessoa update(@Valid @PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
         return pessoaService.update(id, pessoaAtualizar);
     }
 
     @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10
-    public void delete(@PathVariable("idPessoa") Integer id) throws Exception {
+    public void delete(@Valid @PathVariable("idPessoa") Integer id) throws Exception {
         pessoaService.delete(id);
     }
 

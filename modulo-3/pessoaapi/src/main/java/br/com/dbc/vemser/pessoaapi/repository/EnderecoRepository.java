@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,10 +15,10 @@ public class EnderecoRepository {
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public EnderecoRepository () {
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "rua sla", 50, "fim de mundo"));
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "av. 50", 7564, "fim de mundo"));
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 2, "av. 40", 26, "fim de mundo"));
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 3, "av. 80", 78, "fim de mundo"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "comercial", "rua sla", 50, "fim de mundo"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "residencial", "av. 50", 7564, "fim de mundo"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 2, "comercial", "av. 40", 26, "fim de mundo"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 3, "residencial", "av. 80", 78, "fim de mundo"));
     }
 
     public Endereco create (Endereco endereco) {
@@ -30,9 +31,12 @@ public class EnderecoRepository {
         Endereco resultEndereco = enderecoList.stream()
                 .filter(endereco1 -> endereco1.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Endereco nao encontrado."));
-        resultEndereco = endereco;
-        return resultEndereco;
+                .orElseThrow(() -> new RegraDeNegocioException("Endereco nao encontrado."));
+        endereco.setId(resultEndereco.getId());
+        endereco.setIdPessoa(resultEndereco.getIdPessoa());
+        enderecoList.add(enderecoList.indexOf(resultEndereco), endereco);
+        enderecoList.remove(resultEndereco);
+        return endereco;
     }
 
     public List<Endereco> list() {
@@ -43,7 +47,7 @@ public class EnderecoRepository {
         Endereco endereco = enderecoList.stream()
                 .filter(endereco1 -> endereco1.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Endereco nao encontrado."));
+                .orElseThrow(() -> new RegraDeNegocioException("Endereco nao encontrado."));
         enderecoList.remove(endereco);
         return endereco;
     }
