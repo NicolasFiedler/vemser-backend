@@ -1,7 +1,10 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,29 +15,35 @@ public class ContatoService {
 
     @Autowired
     private ContatoRepository contatoRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
 //    public ContatoService () {
 //        contatoRepository = new ContatoRepository();
 //    }
 
-    public Contato create (Contato contato) {
-        return contatoRepository.create(contato);
+    public ContatoDTO create (ContatoCreateDTO contato) {
+        return objectMapper.convertValue(contatoRepository.create(objectMapper.convertValue(contato, Contato.class)), ContatoDTO.class);
     }
 
-    public List<Contato> list() {
-        return contatoRepository.list();
+    public List<ContatoDTO> list() {
+        return contatoRepository.list().stream()
+                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
+                .toList();
     }
 
-    public Contato update (Integer id, Contato contato) throws Exception {
-        return contatoRepository.update(id, contato);
+    public ContatoDTO update (Integer id, ContatoCreateDTO contato) throws Exception {
+        return objectMapper.convertValue(contatoRepository.update(id, objectMapper.convertValue(contato, Contato.class)), ContatoDTO.class);
     }
 
-    public void delete (Integer id) throws Exception {
-        contatoRepository.delete(id);
+    public ContatoDTO delete (Integer id) throws Exception {
+        return objectMapper.convertValue(contatoRepository.delete(id), ContatoDTO.class);
     }
 
-    public List<Contato> listByPessoaId(Integer id) {
-        return contatoRepository.listByPessoaId(id);
+    public List<ContatoDTO> listByPessoaId(Integer id) {
+        return contatoRepository.listByPessoaId(id).stream()
+                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
+                .toList();
     }
 
 }

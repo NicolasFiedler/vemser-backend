@@ -1,4 +1,8 @@
 package br.com.dbc.vemser.pessoaapi.dto.contato;
 
-public class ContatoDTO {
+import javax.validation.constraints.NotEmpty;
+
+public class ContatoDTO extends ContatoCreateDTO{
+    
+    private Integer idContato;
 }

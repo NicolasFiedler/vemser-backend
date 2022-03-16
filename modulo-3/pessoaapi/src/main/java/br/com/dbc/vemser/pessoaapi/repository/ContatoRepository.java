@@ -22,7 +22,7 @@ public class ContatoRepository {
     }
 
     public Contato create (Contato contato) {
-        contato.setId(COUNTER.incrementAndGet());
+        contato.setIdContato(COUNTER.incrementAndGet());
         contatoList.add(contato);
         return contato;
     }
@@ -33,7 +33,7 @@ public class ContatoRepository {
 
     public Contato update (Integer id, Contato contatoUpdate) throws Exception {
         Contato contatoRecuperado = contatoList.stream()
-                .filter(contato -> contato.getId().equals(id))
+                .filter(contato -> contato.getIdContato().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Contato nao encontrado"));
         contatoRecuperado.setTipo(contatoUpdate.getTipo());
@@ -41,12 +41,15 @@ public class ContatoRepository {
         return contatoRecuperado;
     }
 
-    public void delete (Integer id) throws Exception {
+    public Contato delete (Integer id) throws Exception {
         Contato contatoRecuperado = contatoList.stream()
-                .filter(contato -> contato.getId().equals(id))
+                .filter(contato -> contato.getIdContato().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Contato nao encontrado"));
-        contatoList.remove(contatoRecuperado);
+        if (contatoList.remove(contatoRecuperado)) {
+            return contatoRecuperado;
+        }
+        return null;
     }
 
     public List<Contato> listByPessoaId(Integer id) {

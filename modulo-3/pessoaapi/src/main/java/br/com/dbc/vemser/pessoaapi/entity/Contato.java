@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class Contato {
-    private Integer id;
+    private Integer idContato;
     private Integer idPessoa;
     @NotNull
     private String tipo;
@@ -62,13 +62,4 @@ public class Contato {
 //    public void setNumeroTelefone(String numeroTelefone) {
 //        this.numeroTelefone = numeroTelefone;
 //    }
-
-    @Override
-    public String toString() {
-        return "Contato{" +
-                "id=" + id +
-                ", idPessoa=" + idPessoa +
-                ", numeroTelefone='" + numeroTelefone + '\'' +
-                '}';
-    }
 }

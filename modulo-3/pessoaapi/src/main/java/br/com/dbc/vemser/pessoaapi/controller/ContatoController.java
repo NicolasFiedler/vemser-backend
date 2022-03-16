@@ -1,8 +1,11 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -19,38 +22,42 @@ public class ContatoController {
 
     @Autowired
     private ContatoService contatoService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
 //    public ContatoController () {
 //        contatoService = new ContatoService();
 //    }
 
     @GetMapping
-    public List<Contato> list() {
+    public List<ContatoDTO> list() {
+        log.info("Listar Contato");
         return contatoService.list();
     }
 
     @GetMapping("/{idPessoa}")
-    public List<Contato> listByPessoaId (@Valid @PathVariable("idPessoa") Integer id) {
+    public List<ContatoDTO> listByPessoaId (@Valid @PathVariable("idPessoa") Integer id) {
+        log.info("Listar Contatos por Pessoa");
         return contatoService.listByPessoaId(id);
     }
 
     @PostMapping("/{idPessoa}")
-    public Contato create(@Valid @PathVariable("idPessoa") Integer idPessoa, @RequestBody Contato contato) {
+    public ContatoDTO create(@Valid @PathVariable("idPessoa") Integer idPessoa, @RequestBody ContatoCreateDTO contato) {
         contato.setIdPessoa(idPessoa);
-        log.info("Contato Inserido!");
+        log.info("Inserir Contato");
         return contatoService.create(contato);
     }
 
     @PutMapping("/{idContato}")
-    public Contato update(@Valid @PathVariable("idContato") Integer id,
-                          @Valid @RequestBody Contato contatoUpdate) throws Exception {
-        log.info("Contato Atualizado!");
+    public ContatoDTO update(@Valid @PathVariable("idContato") Integer id,
+                          @Valid @RequestBody ContatoCreateDTO contatoUpdate) throws Exception {
+        log.info("Atualizar Contato");
         return contatoService.update(id, contatoUpdate);
     }
 
     @DeleteMapping("/{idContato}")
-    public void delete(@Valid @PathVariable("idContato") Integer id) throws Exception {
-        log.info("Contato Removido!");
-        contatoService.delete(id);
+    public ContatoDTO delete(@Valid @PathVariable("idContato") Integer id) throws Exception {
+        log.info("Remover Contato");
+        return contatoService.delete(id);
     }
 }
