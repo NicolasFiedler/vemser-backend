@@ -15,10 +15,10 @@ public class EnderecoRepository {
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public EnderecoRepository () {
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "comercial", "rua sla", 50, "fim de mundo"));
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "residencial", "av. 50", 7564, "fim de mundo"));
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 2, "comercial", "av. 40", 26, "fim de mundo"));
-        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 3, "residencial", "av. 80", 78, "fim de mundo"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "comercial", "rua sla", 50, "fim de mundo", "96700000", "Estado de lugar nenhum", "pais de ninguem"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 1, "residencial", "av. 50", 7564, "fim de mundo", "96700000", "Estado de lugar nenhum", "pais de ninguem"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 2, "comercial", "av. 40", 26, "fim de mundo", "96700000", "Estado de lugar nenhum", "pais de ninguem"));
+        enderecoList.add(new Endereco(COUNTER.incrementAndGet(), 3, "residencial", "av. 80", 78, "fim de mundo", "96700000", "Estado de lugar nenhum", "pais de ninguem"));
     }
 
     public Endereco create (Endereco endereco) {

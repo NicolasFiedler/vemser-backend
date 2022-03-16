@@ -1,8 +1,10 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import br.com.dbc.vemser.pessoaapi.service.PropertieReader;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @Validated
+@Log
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
 
@@ -31,28 +34,33 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public Pessoa create(@Valid @RequestBody Pessoa pessoa) {
+    public PessoaDTO create(@Valid @RequestBody PessoaCreateDTO pessoa) {
+        log.info("Pessoa Inserida");
         return pessoaService.create(pessoa);
     }
 
     @GetMapping // localhost:8080/pessoa
-    public List<Pessoa> list() {
+    public List<PessoaDTO> list() {
+        log.info("Request de pessoas");
         return pessoaService.list();
     }
 
     @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<Pessoa> listByName(@Valid @RequestParam("nome") String nome) {
+    public List<PessoaDTO> listByName(@Valid @RequestParam("nome") String nome) {
+        log.info("Request de pessoa por nome");
         return pessoaService.listByName(nome);
     }
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-    public Pessoa update(@Valid @PathVariable("idPessoa") Integer id,
-                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
+    public PessoaDTO update(@Valid @PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws Exception {
+        log.info("Pessoa Atualizada");
         return pessoaService.update(id, pessoaAtualizar);
     }
 
     @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10
     public void delete(@Valid @PathVariable("idPessoa") Integer id) throws Exception {
+        log.info("Pessoa Removida");
         pessoaService.delete(id);
     }
 

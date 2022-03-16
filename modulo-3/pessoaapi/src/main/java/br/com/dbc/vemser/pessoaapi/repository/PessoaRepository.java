@@ -47,12 +47,15 @@ public class PessoaRepository {
         return pessoaRecuperada;
     }
 
-    public void delete(Integer id) throws Exception {
+    public Pessoa delete(Integer id) throws Exception {
         Pessoa pessoaRecuperada = listaPessoas.stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
-        listaPessoas.remove(pessoaRecuperada);
+        if (listaPessoas.remove(pessoaRecuperada)){
+            return pessoaRecuperada;
+        }
+        return null;
     }
 
     public List<Pessoa> listByName(String nome) {

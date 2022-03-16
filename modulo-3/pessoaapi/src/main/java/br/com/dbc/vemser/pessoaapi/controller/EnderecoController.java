@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Controller
 @Validated
+@Log
 public class EnderecoController {
 
     @Autowired
@@ -35,17 +37,20 @@ public class EnderecoController {
     @PostMapping("/{idPessoa}")
     public Endereco create(@Valid @PathVariable("idPessoa") Integer idPessoa,
                            @Valid @RequestBody Endereco endereco) {
+        log.info("Endereco Inserido!");
         return enderecoService.create(idPessoa, endereco);
     }
 
     @PutMapping("/{idEndereco}")
     public Endereco update(@Valid @PathVariable("idEndereco") Integer idEndereco,
                            @Valid @RequestBody Endereco endereco) throws Exception {
+        log.info("Endereco Atualizado!");
         return enderecoService.update(idEndereco, endereco);
     }
 
     @DeleteMapping("/{idEndereco}")
     public Endereco delete(@Valid @PathVariable("idEndereco") Integer id) throws Exception {
+        log.info("Endereco Removido!");
         return enderecoService.delete(id);
     }
 }
