@@ -14,12 +14,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class ContatoCreateDTO {
-    @NotEmpty
-    @NotNull
     private Integer idPessoa;
     @NotNull
     private String tipo;
-    @NotEmpty
-    @Max(13)
+    @NotEmpty @Max(13)
     private String numeroTelefone;
 }

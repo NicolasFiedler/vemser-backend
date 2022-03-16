@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class Endereco {
 
-    private Integer id;
+    private Integer idEndereco;
     private Integer idPessoa;
     @NotNull
     private String tipo;

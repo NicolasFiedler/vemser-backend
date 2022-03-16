@@ -1,11 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,13 +11,15 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Contato {
+
     private Integer idContato;
+
     private Integer idPessoa;
     @NotNull
     private String tipo;
-    @NotEmpty
-    @Max(13)
+    @NotEmpty @Min(9) @Max(13)
     private String numeroTelefone;
 
 //    public Contato(){}

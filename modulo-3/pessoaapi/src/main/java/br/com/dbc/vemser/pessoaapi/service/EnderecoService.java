@@ -1,7 +1,10 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,35 +15,40 @@ public class EnderecoService {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public List<Endereco> list() {
-        return enderecoRepository.list();
-    }
-
-    public Endereco getById(Integer id) throws Exception {
-        return list().stream()
-                .filter(endereco -> endereco.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Endereco não encontrado."));
-    }
-
-    public List<Endereco> getByPessoa(Integer id) throws Exception {
-        return list().stream()
-                .filter(e -> e.getIdPessoa().equals(id))
+    public List<EnderecoDTO> list() {
+        return enderecoRepository.list().stream()
+                .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
                 .toList();
     }
 
-    public Endereco create(Integer id, Endereco endereco) {
+    public EnderecoDTO getById(Integer id) throws Exception {
+        return objectMapper.convertValue(list().stream()
+                .filter(endereco -> endereco.getIdEndereco().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Endereco não encontrado.")), EnderecoDTO.class);
+    }
+
+    public List<EnderecoDTO> getByPessoa(Integer id) throws Exception {
+        return list().stream()
+                .filter(e -> e.getIdPessoa().equals(id))
+                .map(e -> objectMapper.convertValue(e, EnderecoDTO.class))
+                .toList();
+    }
+
+    public EnderecoDTO create(Integer id, EnderecoCreateDTO endereco) {
         endereco.setIdPessoa(id);
-        return enderecoRepository.create(endereco);
+        return objectMapper.convertValue(enderecoRepository.create(objectMapper.convertValue(endereco, Endereco.class)), EnderecoDTO.class);
     }
 
-    public Endereco update(Integer id, Endereco endereco) throws Exception {
-        return enderecoRepository.update(id, endereco);
+    public EnderecoDTO update(Integer id, EnderecoCreateDTO endereco) throws Exception {
+        return objectMapper.convertValue(enderecoRepository.update(id, objectMapper.convertValue(endereco, Endereco.class)), EnderecoDTO.class);
     }
 
-    public Endereco delete(Integer id) throws Exception {
-        return enderecoRepository.delete(id);
+    public EnderecoDTO delete(Integer id) throws Exception {
+        return objectMapper.convertValue(enderecoRepository.delete(id), EnderecoDTO.class);
     }
 
 }
