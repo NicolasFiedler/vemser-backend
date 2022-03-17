@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
+import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import br.com.dbc.vemser.pessoaapi.service.PropertieReader;
 import lombok.extern.java.Log;
@@ -23,6 +24,9 @@ public class PessoaController {
 
     @Autowired
     private PropertieReader propertieReader;
+
+    @Autowired
+    private EmailService emailService;
 
 //    public PessoaController() {
 //        pessoaService = new PessoaService();

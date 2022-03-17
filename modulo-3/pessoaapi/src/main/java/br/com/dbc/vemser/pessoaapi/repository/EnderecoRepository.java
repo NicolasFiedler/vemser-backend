@@ -22,17 +22,17 @@ public class EnderecoRepository {
     }
 
     public Endereco create (Endereco endereco) {
-        endereco.setId(COUNTER.incrementAndGet());
+        endereco.setIdEndereco(COUNTER.incrementAndGet());
         enderecoList.add(endereco);
         return endereco;
     }
 
     public Endereco update (Integer id, Endereco endereco) throws Exception {
         Endereco resultEndereco = enderecoList.stream()
-                .filter(endereco1 -> endereco1.getId().equals(id))
+                .filter(endereco1 -> endereco1.getIdEndereco().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Endereco nao encontrado."));
-        endereco.setId(resultEndereco.getId());
+        endereco.setIdEndereco(resultEndereco.getIdEndereco());
         endereco.setIdPessoa(resultEndereco.getIdPessoa());
         enderecoList.add(enderecoList.indexOf(resultEndereco), endereco);
         enderecoList.remove(resultEndereco);
@@ -45,7 +45,7 @@ public class EnderecoRepository {
 
     public Endereco delete(Integer id) throws Exception {
         Endereco endereco = enderecoList.stream()
-                .filter(endereco1 -> endereco1.getId().equals(id))
+                .filter(endereco1 -> endereco1.getIdEndereco().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Endereco nao encontrado."));
         enderecoList.remove(endereco);

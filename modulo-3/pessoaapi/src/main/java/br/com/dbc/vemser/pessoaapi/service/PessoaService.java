@@ -17,31 +17,22 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private EmailService emailService;
 
 //    public PessoaService(){
 //        pessoaRepository = new PessoaRepository();
 //    }
 
     public PessoaDTO create(PessoaCreateDTO pessoaCreateDTO){
-//        try{
-//            if (StringUtils.isBlank(pessoa.getNome())) {
-//                throw new Exception("Nome nao pode ficar em branco");
-//            }
-//            if (ObjectUtils.isEmpty(pessoa.getDataNascimento())) {
-//                throw new Exception("Data de nascimento nao pode ficar em branco");
-//            }
-//            if (StringUtils.isBlank(pessoa.getCpf()) || (pessoa.getCpf().length() != 11 && StringUtils.isAlpha(pessoa.getCpf()))) {
-//                throw new Exception("CPF invalido");
-//            }
-//
-//            return pessoaRepository.create(pessoa);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
+
         Pessoa p = objectMapper.convertValue(pessoaCreateDTO, Pessoa.class);
         p = pessoaRepository.create(p);
+        if (p != null){
+            emailService.sendEmail(objectMapper.convertValue(p, PessoaDTO.class));
+        }
         return objectMapper.convertValue(p, PessoaDTO.class);
     }
 
