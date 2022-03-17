@@ -19,11 +19,11 @@
                         </div>
 
                         <div style="font-size: 24px; color: #555100;">
-                            <p><br>Estamos felizes em ter você em nosso sistema :) <br>
-                            Seu cadastro foi realizado com sucesso, seu identificador é <b>${id}</b>.<br></p>
+                            <p><br><br>
+                            Endereco foi removido com sucesso.<br></p>
                         </div>
                         <div>
-                            <br>"Sharing the knowledge is biggest learning" <br> <br>
+                            <br><br><br>
                             <br> <br> <p>Para suporte, contatar: <b>${suporte_email}</b></p>
                             <br>
                         </div>

@@ -63,7 +63,7 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public void sendEmail(PessoaDTO pessoaDTO) {
+    public void sendEmail(PessoaDTO pessoaDTO, String assunto,String templateName) {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         try {
 
@@ -71,22 +71,21 @@ public class EmailService {
 
             mimeMessageHelper.setFrom(from);
             mimeMessageHelper.setTo(pessoaDTO.getEmail());
-            mimeMessageHelper.setSubject("Nova pessoa cadastrada!");
-            mimeMessageHelper.setText(geContentFromTemplate(pessoaDTO), true);
-
+            mimeMessageHelper.setSubject(assunto);
+            mimeMessageHelper.setText(geContentFromTemplate(pessoaDTO, templateName), true);
             emailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException | IOException | TemplateException e) {
             e.printStackTrace();
         }
     }
 
-    public String geContentFromTemplate(PessoaDTO pessoaDTO) throws IOException, TemplateException {
+    public String geContentFromTemplate(PessoaDTO pessoaDTO, String templateName) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", pessoaDTO.getNome());
         dados.put("id", pessoaDTO.getIdPessoa());
         dados.put("suporte_email", from);
         fmConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources/templates"));
-        Template template = fmConfiguration.getTemplate("email-template.ftl");
+        Template template = fmConfiguration.getTemplate(templateName);
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
         return html;
     }

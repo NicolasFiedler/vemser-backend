@@ -16,7 +16,11 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
     @Autowired
+    private PessoaService pessoaService;
+    @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private EmailService emailService;
 
     public List<EnderecoDTO> list() {
         return enderecoRepository.list().stream()
@@ -38,17 +42,28 @@ public class EnderecoService {
                 .toList();
     }
 
-    public EnderecoDTO create(Integer id, EnderecoCreateDTO endereco) {
+    public EnderecoDTO create(Integer id, EnderecoCreateDTO endereco) throws Exception {
         endereco.setIdPessoa(id);
-        return objectMapper.convertValue(enderecoRepository.create(objectMapper.convertValue(endereco, Endereco.class)), EnderecoDTO.class);
+        Endereco e = enderecoRepository.create(objectMapper.convertValue(endereco, Endereco.class));
+        if (e != null){
+            emailService.sendEmail(pessoaService.getPessoaById(id), "Novo endereco adicionado!", "email-template-cria-endereco.ftl");
+        }
+        return objectMapper.convertValue(e, EnderecoDTO.class);
     }
 
     public EnderecoDTO update(Integer id, EnderecoCreateDTO endereco) throws Exception {
-        return objectMapper.convertValue(enderecoRepository.update(id, objectMapper.convertValue(endereco, Endereco.class)), EnderecoDTO.class);
+        Endereco e = enderecoRepository.update(id, objectMapper.convertValue(endereco, Endereco.class));
+        if (e != null){
+            emailService.sendEmail(pessoaService.getPessoaById(endereco.getIdPessoa()), "Endereco atualizado!", "email-template-atualiza-endereco.ftl");
+        }
+        return objectMapper.convertValue(e, EnderecoDTO.class);
     }
 
     public EnderecoDTO delete(Integer id) throws Exception {
-        return objectMapper.convertValue(enderecoRepository.delete(id), EnderecoDTO.class);
-    }
+        Endereco e = enderecoRepository.delete(id);
+        if (e != null){
+            emailService.sendEmail(pessoaService.getPessoaById(e.getIdPessoa()), "Endereco Removido!", "email-template-remove-endereco.ftl");
+        }
+        return objectMapper.convertValue(e, EnderecoDTO.class);    }
 
 }

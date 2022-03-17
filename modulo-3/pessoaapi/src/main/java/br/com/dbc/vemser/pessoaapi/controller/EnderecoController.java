@@ -2,11 +2,9 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
-import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +37,7 @@ public class EnderecoController {
 
     @PostMapping("/{idPessoa}")
     public EnderecoDTO create(@Valid @PathVariable("idPessoa") Integer idPessoa,
-                           @Valid @RequestBody EnderecoCreateDTO endereco) {
+                           @Valid @RequestBody EnderecoCreateDTO endereco) throws Exception {
         log.info("Endereco Inserido!");
         return enderecoService.create(idPessoa, endereco);
     }

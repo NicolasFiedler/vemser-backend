@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,18 +17,17 @@ public class EnderecoCreateDTO {
     @NotNull
     private String tipo;
     @NotEmpty
-    @Max(250)
+    @Size(min = 1, max = 250)
     private String logradouro;
-    @NotEmpty
     @NotNull
     private Integer numero;
     @NotEmpty
     @NotNull
-    @Max(250)
+    @Size(min = 1, max = 250)
     private String cidade;
     @NotEmpty
     @NotNull
-    @Max(8)
+    @Size(min = 8, max = 8)
     private String cep;
     @NotNull
     private String estado;
