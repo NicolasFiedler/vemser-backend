@@ -3,8 +3,8 @@ package br.com.dbc.vemser.pessoaapi.enuns;
 import java.util.Arrays;
 
 public enum Tipo {
-    RESIDENTIAL(1),
-    BUSINESS(2);
+    RESIDENTIAL(0),
+    BUSINESS(1);
 
     private Integer type;
 

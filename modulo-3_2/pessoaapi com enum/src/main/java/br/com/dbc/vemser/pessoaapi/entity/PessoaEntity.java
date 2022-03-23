@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,45 +36,16 @@ public class PessoaEntity {
     @Column(name = "cpf")
     private String cpf;
 
-//    public Pessoa() {
-//    }
-//
-//    public Pessoa(Integer idPessoa, String nome, LocalDate dataNascimento, String cpf) {
-//        this.idPessoa = idPessoa;
-//        this.nome = nome;
-//        this.dataNascimento = dataNascimento;
-//        this.cpf = cpf;
-//    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "pessoaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ContatoEntity> contatos;
 
-//    public Integer getIdPessoa() {
-//        return idPessoa;
-//    }
-//
-//    public void setIdPessoa(Integer idPessoa) {
-//        this.idPessoa = idPessoa;
-//    }
-//
-//    public String getNome() {
-//        return nome;
-//    }
-//
-//    public void setNome(String nome) {
-//        this.nome = nome;
-//    }
-//
-//    public LocalDate getDataNascimento() {
-//        return dataNascimento;
-//    }
-//
-//    public void setDataNascimento(LocalDate dataNascimento) {
-//        this.dataNascimento = dataNascimento;
-//    }
-//
-//    public String getCpf() {
-//        return cpf;
-//    }
-//
-//    public void setCpf(String cpf) {
-//        this.cpf = cpf;
-//    }
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "pessoa_x_pessoa_endereco",
+            joinColumns = @JoinColumn(name = "id_pessoa"),
+            inverseJoinColumns = @JoinColumn(name = "id_endereco")
+    )
+    private Set<EnderecoEntity> enderecos;
 }

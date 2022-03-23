@@ -2,23 +2,21 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ContatoService {
 
-    @Autowired
-    private ContatoRepository contatoRepository;
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ContatoRepository contatoRepository;
+    private final ObjectMapper objectMapper;
 
     public ContatoDTO create (ContatoCreateDTO contato) {
         return objectMapper.convertValue(contatoRepository.save(objectMapper.convertValue(contato, ContatoEntity.class)), ContatoDTO.class);

@@ -1,39 +1,36 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
+import br.com.dbc.vemser.pessoaapi.dto.contato.PessoaDTOComEndereco;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTOComContatos;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import br.com.dbc.vemser.pessoaapi.service.PropertieReader;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @Validated
 @Log
+@RequiredArgsConstructor
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
 
-    @Autowired
-    private PessoaService pessoaService;
-
-    @Autowired
-    private PropertieReader propertieReader;
-
-    @Autowired
-    private EmailService emailService;
-
-//    public PessoaController() {
-//        pessoaService = new PessoaService();
-//    }
+    private final PessoaService pessoaService;
+    private final PropertieReader propertieReader;
+    private final EmailService emailService;
 
     @ApiOperation(value = "Hello World!")
     @ApiResponses(value = {
@@ -80,17 +77,51 @@ public class PessoaController {
         return pessoaService.getPessoaById(id);
     }
 
-//    @ApiOperation(value = "Retorna a pessoa com este nome (Ex.: ENTRADA: 'pereira' | SAIDA: [DADOS DE] 'Charles Pereira Lima')")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Retorna a pessoa encontrada"),
-//            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
-//            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
-//    })
-//    @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-//    public List<PessoaDTO> listByName(@Valid @RequestParam("nome") String nome) {
-//        log.info("Request de pessoa por nome");
-//        return pessoaService.listByName(nome);
-//    }
+    @ApiOperation(value = "Retorna uma lista de pessoas com este nome")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna as pessoas encontradas"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+    })
+    @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
+    public List<PessoaDTO> listByName(@RequestParam("nome") String nome) {
+        log.info("Request de pessoa por nome");
+        return pessoaService.findByNomeIgnoreCaseContaining(nome);
+    }
+
+    @ApiOperation(value = "Retorna a pessoas com este cpf")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna a pessoa encontrada"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+    })
+    @GetMapping("/bycpf")
+    public PessoaDTO listByCpf(@RequestParam("cpf") String cpf) throws RegraDeNegocioException {
+        log.info("Request de pessoa por cpf");
+        return pessoaService.findByCpf(cpf);
+    }
+
+    @ApiOperation(value = "Retorna uma lista de pessoas com este nome")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna as pessoas encontradas"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+    })
+    @GetMapping("/bydate")
+    public List<PessoaDTO> findByDataNascimentoBetween(@RequestParam("incio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+                                                       @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fim) {
+        return pessoaService.findByDataNascimentoBetween(inicio, fim);
+    }
+
+    @GetMapping("/listar-com-contatos")
+    public List<PessoaDTOComContatos> listarPessoasComContato(@RequestParam(value = "id", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listComContatos(idPessoa);
+    }
+
+    @GetMapping("/listar-com-enderecos")
+    public List<PessoaDTOComEndereco> listarPessoasComEndereco(@RequestParam(value = "id", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listComEndereco(idPessoa);
+    }
 
     @ApiOperation(value = "Altera e retorna a pessoa alterada")
     @ApiResponses(value = {

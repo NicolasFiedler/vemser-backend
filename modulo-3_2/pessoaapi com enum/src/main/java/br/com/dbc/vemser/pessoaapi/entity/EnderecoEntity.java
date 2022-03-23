@@ -1,12 +1,14 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
 import br.com.dbc.vemser.pessoaapi.enuns.Tipo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,14 +48,7 @@ public class EnderecoEntity {
     @Column(name = "pais")
     private String pais;
 
-//    id_endereco NUMBER NOT NULL,
-//    tipo NUMBER NOT NULL,
-//    logradouro VARCHAR2(200) NOT NULL,
-//    numero NUMBER NOT NULL,
-//    complemento VARCHAR2(200) NULL,
-//    cep VARCHAR2(8) NOT NULL,
-//    cidade VARCHAR2(300) NOT NULL,
-//    estado VARCHAR2(100) NOT NULL,
-//    pais VARCHAR2(100) NOT NULL,
-//    PRIMARY KEY(id_endereco)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "enderecos")
+    private Set<PessoaEntity> pessoas;
 }
