@@ -2,10 +2,13 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
+import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,11 +20,12 @@ import java.util.List;
 @Validated
 @Log
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/endereco")
 public class EnderecoController {
 
-    @Autowired
-    private EnderecoService enderecoService;
+    private final EnderecoService enderecoService;
+    private final EnderecoRepository enderecoRepository;
 
     @ApiOperation(value = "Retorna todos os enderecos")
     @ApiResponses(value = {
@@ -43,6 +47,26 @@ public class EnderecoController {
     @GetMapping("/{idEndereco}")
     public EnderecoDTO getById(@Valid @PathVariable("idEndereco") Integer idEndereco) throws Exception {
         return enderecoService.getById(idEndereco);
+    }
+
+    @GetMapping("/bypais")
+    public List<EnderecoEntity> findByPais (@RequestParam("nome") String pais) {
+        return enderecoRepository.findEnderecoByPais(pais);
+    }
+
+    @GetMapping("/find-by-cidade-ou-pais")
+    public List<EnderecoEntity> findEnderecoByEstadoPais (@RequestParam("nome") String nome) {
+        return enderecoRepository.findEnderecoByEstadoPais(nome);
+    }
+
+    @GetMapping("/find-complemento-null")
+    public List<EnderecoEntity> findEnderecoSemComplemento () {
+        return enderecoRepository.findEnderecoSemComplemento();
+    }
+
+    @GetMapping("/byidpessoa")
+    public List<EnderecoEntity> findByIdPessoa (@RequestParam("id") Integer id) throws Exception {
+        return enderecoRepository.findEnderecoByIdPessoa(id);
     }
 
 //    @ApiOperation(value = "Retorna todos os Enderecos de uma Pessoa (busca por ID da Pessoa)")

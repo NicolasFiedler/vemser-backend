@@ -2,11 +2,15 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.dbc.vemser.pessoaapi.enuns.Tipo;
+import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -18,17 +22,13 @@ import java.util.List;
 @RestController
 @Validated
 @Log
+@RequiredArgsConstructor
 @RequestMapping("/contato")
 public class ContatoController {
 
-    @Autowired
-    private ContatoService contatoService;
-    @Autowired
-    private ObjectMapper objectMapper;
-
-//    public ContatoController () {
-//        contatoService = new ContatoService();
-//    }
+    private final ContatoService contatoService;
+    private final ContatoRepository contatoRepository;
+    private final ObjectMapper objectMapper;
 
     @ApiOperation(value = "Retorna todos os Contatos")
     @ApiResponses(value = {
@@ -48,10 +48,21 @@ public class ContatoController {
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
+
+//    @GetMapping("/{idPessoa}")
+//    public List<ContatoDTO> listByPessoaId (@Valid @PathVariable("idPessoa") Integer id) {
+//        log.info("Listar Contatos por Pessoa");
+//        return contatoService.listByPessoaId(id);
+//    }
     @GetMapping("/{idPessoa}")
-    public List<ContatoDTO> listByPessoaId (@Valid @PathVariable("idPessoa") Integer id) {
+    public List<ContatoEntity> listByPessoaId (@Valid @PathVariable("idPessoa") Integer id) {
         log.info("Listar Contatos por Pessoa");
-        return contatoService.listByPessoaId(id);
+        return contatoRepository.findByIdPessoa(id);
+    }
+
+    @GetMapping("/bytipo")
+    public List<ContatoEntity> listByTipoContato (@RequestParam("tipo") Tipo tipo) {
+        return contatoRepository.findByTipoContato(tipo);
     }
 
     @ApiOperation(value = "Inseri e Retorna o Contato Inserido")

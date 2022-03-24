@@ -4,7 +4,9 @@ import br.com.dbc.vemser.pessoaapi.dto.contato.PessoaDTOComEndereco;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTOComContatos;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import br.com.dbc.vemser.pessoaapi.service.PropertieReader;
@@ -29,6 +31,7 @@ import java.util.List;
 public class PessoaController {
 
     private final PessoaService pessoaService;
+    private final PessoaRepository pessoaRepository;
     private final PropertieReader propertieReader;
     private final EmailService emailService;
 
@@ -107,10 +110,21 @@ public class PessoaController {
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
+//    @GetMapping("/bydate")
+//    public List<PessoaDTO> findByDataNascimentoBetween(@RequestParam("incio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+//                                                       @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fim) {
+//        return pessoaService.findByDataNascimentoBetween(inicio, fim);
+//    }
+
     @GetMapping("/bydate")
-    public List<PessoaDTO> findByDataNascimentoBetween(@RequestParam("incio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
-                                                       @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fim) {
-        return pessoaService.findByDataNascimentoBetween(inicio, fim);
+    public List<PessoaEntity> findByBetweenDataNascimento(@RequestParam("incio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+                                                          @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fim) {
+        return pessoaRepository.findByBetweenDataNascimentoJPQL(inicio, fim);
+    }
+
+    @GetMapping("/listar-pessoas-com-endereco")
+    public List<PessoaEntity> pessoasComEndereco() {
+        return pessoaRepository.pessoasComEndereco();
     }
 
     @GetMapping("/listar-com-contatos")
@@ -121,6 +135,11 @@ public class PessoaController {
     @GetMapping("/listar-com-enderecos")
     public List<PessoaDTOComEndereco> listarPessoasComEndereco(@RequestParam(value = "id", required = false) Integer idPessoa) throws RegraDeNegocioException {
         return pessoaService.listComEndereco(idPessoa);
+    }
+
+    @GetMapping("/listar-sem-enderecos")
+    public List<PessoaEntity> pessoaSemEndereco(){
+        return pessoaRepository.pessoaSemEndereco();
     }
 
     @ApiOperation(value = "Altera e retorna a pessoa alterada")
