@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.dto.contato;
+package br.com.dbc.vemser.pessoaapi.dto.pessoa;
 
 import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;

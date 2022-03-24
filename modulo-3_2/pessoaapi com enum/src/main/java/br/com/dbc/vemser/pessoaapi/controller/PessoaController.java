@@ -1,9 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.dto.contato.PessoaDTOComEndereco;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTOComContatos;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.*;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
@@ -135,6 +132,11 @@ public class PessoaController {
     @GetMapping("/listar-com-enderecos")
     public List<PessoaDTOComEndereco> listarPessoasComEndereco(@RequestParam(value = "id", required = false) Integer idPessoa) throws RegraDeNegocioException {
         return pessoaService.listComEndereco(idPessoa);
+    }
+
+    @GetMapping("/pessoa-completo")
+    public List<PessoaDTOCompleta> listPessoaCompleta(@RequestParam(value = "id", required = false) Integer idPessoa) {
+        return pessoaService.listPessoaCompleta(idPessoa);
     }
 
     @GetMapping("/listar-sem-enderecos")

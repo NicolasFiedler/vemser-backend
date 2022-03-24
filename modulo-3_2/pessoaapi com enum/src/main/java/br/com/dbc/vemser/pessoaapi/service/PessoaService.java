@@ -1,22 +1,17 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.contato.PessoaDTOComEndereco;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.*;
 import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTO;
-import br.com.dbc.vemser.pessoaapi.dto.pessoa.PessoaDTOComContatos;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -147,5 +142,28 @@ public class PessoaService {
             pessoaDTOComEnderecoList.add(pessoaDTOComEndereco);
         }
         return pessoaDTOComEnderecoList;
+    }
+
+    public List<PessoaDTOCompleta> listPessoaCompleta (Integer id) {
+        return pessoaRepository.findAll().stream()
+                .filter(pessoaEntity -> {
+                    if (id == null){
+                        return true;
+                    } else if (pessoaEntity.getIdPessoa().equals(id)){
+                        return true;
+                    }
+                    return false;
+                })
+                .map(pessoaEntity -> {
+                    PessoaDTOCompleta p = objectMapper.convertValue(pessoaEntity, PessoaDTOCompleta.class);
+                    p.setContatos(pessoaEntity.getContatos().stream()
+                            .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                            .collect(Collectors.toList()));
+                    p.setEnderecos(pessoaEntity.getEnderecos().stream()
+                            .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                            .collect(Collectors.toList()));
+                    return p;
+                })
+                .collect(Collectors.toList());
     }
 }
