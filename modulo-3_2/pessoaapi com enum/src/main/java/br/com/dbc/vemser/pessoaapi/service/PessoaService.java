@@ -154,12 +154,15 @@ public class PessoaService {
                 })
                 .map(pessoaEntity -> {
                     PessoaDTOCompleta p = objectMapper.convertValue(pessoaEntity, PessoaDTOCompleta.class);
+
                     p.setContatos(pessoaEntity.getContatos().stream()
                             .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
                             .collect(Collectors.toList()));
+
                     p.setEnderecos(pessoaEntity.getEnderecos().stream()
                             .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
                             .collect(Collectors.toList()));
+
                     return p;
                 })
                 .collect(Collectors.toList());
