@@ -149,10 +149,8 @@ public class PessoaService {
                 .filter(pessoaEntity -> {
                     if (id == null){
                         return true;
-                    } else if (pessoaEntity.getIdPessoa().equals(id)){
-                        return true;
                     }
-                    return false;
+                    return pessoaEntity.getIdPessoa().equals(id);
                 })
                 .map(pessoaEntity -> {
                     PessoaDTOCompleta p = objectMapper.convertValue(pessoaEntity, PessoaDTOCompleta.class);
