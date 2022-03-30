@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.dto.pessoa;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,16 @@ import java.time.LocalDate;
 @Setter
 public class PessoaCreateDTO {
 
+    @ApiModelProperty(value = "Nome da Pessoa")
     @NotEmpty
     private String nome;
+    @ApiModelProperty(value = "Data de nascimento da Pessoa")
     @Past
     private LocalDate dataNascimento;
+    @ApiModelProperty(value = "Email da Pessoa")
     @Email
     private String email;
+    @ApiModelProperty(value = "CPF da Pessoa")
     @CPF
     private String cpf;
 }
