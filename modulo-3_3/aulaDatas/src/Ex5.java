@@ -8,8 +8,8 @@ public class Ex5 {
 
         LocalDateTime now = LocalDateTime.now();
 
-        System.out.println("Brasileiro: " + now.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(new Locale("pt-BR"))));
-        System.out.println("Estado Unidense: " + now.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(new Locale("en"))));
-        System.out.println("Francês: " + now.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(new Locale("fr"))));
+        System.out.println("Brasileiro: " + now.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(new Locale("pt-BR"))));
+        System.out.println("Estado Unidense: " + now.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(new Locale("en"))));
+        System.out.println("Francês: " + now.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(new Locale("fr"))));
     }
 }
