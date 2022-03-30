@@ -1,6 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
+import com.google.gson.JsonElement;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,4 +23,6 @@ public interface EnderecoRepository extends JpaRepository<EnderecoEntity, Intege
 
     @Query(value = "SELECT * FROM endereco_pessoa e WHERE e.complemento is Null", nativeQuery = true)
     List<EnderecoEntity> findEnderecoSemComplemento ();
+
+    Page<EnderecoEntity> findByPais(Pageable pageable, String pais);
 }
