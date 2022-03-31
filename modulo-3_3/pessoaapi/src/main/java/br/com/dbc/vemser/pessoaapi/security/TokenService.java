@@ -2,31 +2,45 @@ package br.com.dbc.vemser.pessoaapi.security;
 
 import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
 import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Base64;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
-    private static final String CARACTER_SEPARACAO = ";";
-    private final UsuarioService usuarioService;
+    private static final String BEARER = "Bearer ";
+    private static final String HEADER_AUTHORIZATION = "Authorization";
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration}")
+    private String expiration;
 
     public String getToken(UsuarioEntity usuarioEntity){
-        String tokenTexto = usuarioEntity.getLogin() + CARACTER_SEPARACAO + usuarioEntity.getSenha(); // maicon;123
-        String token = Base64.getEncoder().encodeToString(tokenTexto.getBytes()); //
-        return token;
+
     }
 
-    public Optional<UsuarioEntity> isValid(String token){
-        if(token == null){
-            return Optional.empty();
+    public Authentication isValid(HttpServletRequest request) {
+        String authorizatioToken = request.getHeader(HEADER_AUTHORIZATION);
+
+        if (authorizatioToken != null){
+            String user = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(authorizatioToken.replace(BEARER, ""))
+                    .getBody()
+                    .getSubject()
+                    //TODO - seguir daqui
+
         }
-        byte[] decodedTokenBytes = Base64.getUrlDecoder().decode(token); // bWFpY29uOzEyMw==
-        String decodedTokenString = new String(decodedTokenBytes); //maicon;123
-        String[] usuarioESenha = decodedTokenString.split(CARACTER_SEPARACAO);/// ['maicon', '123']
-        return usuarioService.findByLoginAndSenha(usuarioESenha[0] /*maicon*/, usuarioESenha[1] /*123*/);
     }
 }
