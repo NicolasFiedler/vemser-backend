@@ -24,7 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
 //                .antMatchers("/**").permitAll()                     //Permite o acesso geral da api apos autenticado
-                .antMatchers("/auth").permitAll()        //Permite acesso apenas a este end point quando autenticado
+                .antMatchers("/").permitAll()
+                .antMatchers("/auth/**").permitAll()        //Permite acesso apenas a este end point quando autenticado
                 .anyRequest().authenticated()                       //necesesita estar autenticado para ter acesso ao dados
                 .and().addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
         ;

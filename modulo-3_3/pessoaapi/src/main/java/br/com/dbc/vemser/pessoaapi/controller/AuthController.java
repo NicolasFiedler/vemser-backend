@@ -6,6 +6,9 @@ import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.security.TokenService;
 import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,15 +25,24 @@ import java.util.Optional;
 public class AuthController {
     private final UsuarioService usuarioService;
     private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping
-    public String auth(@RequestBody @Valid LoginDTO loginDTO) throws RegraDeNegocioException {
-        Optional<UsuarioEntity> usuarioBuscado = usuarioService.findByLoginAndSenha(loginDTO.getLogin(), loginDTO.getSenha());
-        if(usuarioBuscado.isPresent()){
-            return tokenService.getToken(usuarioBuscado.get());
-        } else {
-            throw new RegraDeNegocioException("Usuario e senha inválidos!");
-        }
+    public String auth(@RequestBody @Valid LoginDTO loginDTO) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.getLogin(),
+                        loginDTO.getSenha()
+                );
+
+        Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        return tokenService.getToken(authenticate);
+
+    }
+
+    @PostMapping("/register")
+    public LoginDTO register(@RequestBody @Valid LoginDTO loginDTO) throws RegraDeNegocioException {
+        return usuarioService.register(loginDTO);
     }
 
 }
