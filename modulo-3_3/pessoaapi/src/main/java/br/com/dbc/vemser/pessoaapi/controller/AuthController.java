@@ -10,10 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -41,8 +38,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public LoginDTO register(@RequestBody @Valid LoginDTO loginDTO) throws RegraDeNegocioException {
-        return usuarioService.register(loginDTO);
+    public LoginDTO register(@RequestBody @Valid LoginDTO loginDTO, Integer[] ids) throws RegraDeNegocioException {
+        return usuarioService.register(loginDTO, ids);
     }
 
 }

@@ -3,6 +3,7 @@ package br.com.dbc.vemser.pessoaapi.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,10 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable().and().cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/**").permitAll()                     //Permite o acesso geral da api apos autenticado
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth/**").permitAll()        //Permite acesso apenas a este end point quando autenticado
-                .anyRequest().authenticated()                       //necesesita estar autenticado para ter acesso ao dados
+                .antMatchers("/auth").permitAll()
+                .antMatchers(HttpMethod.GET, "/pessoa/**", "/contato/**", "/endereco/**").hasAnyRole("MARKETING", "ADMIN", "USER")
+                .antMatchers("/pessoa/**", "/contato/**", "/endereco/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and().addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
         ;
     }
