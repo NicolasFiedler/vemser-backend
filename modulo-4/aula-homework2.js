@@ -184,7 +184,7 @@ db.alunos.updateOne(
 )
 
 
-//RETORNO UPDATE SEM $set
+//RETORNO UPDATE
 
 //antes
 { _id: ObjectId("624d829ddbfc4f03ce613a86"),
