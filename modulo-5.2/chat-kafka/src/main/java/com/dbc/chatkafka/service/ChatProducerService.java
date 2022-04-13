@@ -29,13 +29,14 @@ public class ChatProducerService {
     private final KafkaTemplate<String,String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public void enviarMensagem(User from, String mensagem, Topics[] topics) {
-        if (!Arrays.asList(topics).isEmpty() ) {
+    public void enviarMensagem(User from, String mensagem, Topics[] topics) {if (!Arrays.asList(topics).isEmpty() ) {
             MensagemDTO mensagemDTO = new MensagemDTO(from.getUser(), mensagem, LocalDateTime.now());
             if (Arrays.asList(topics).contains(Topics.GERAL)) {
                 enviar(mensagemDTO, Topics.GERAL);
             } else {
-                Arrays.asList(topics).forEach(topic -> enviar(mensagemDTO, topic));
+                Arrays.stream(topics)
+                        .filter(topic -> !topic.getTopic().contains(from.getUser()))
+                        .forEach(topic -> enviar(mensagemDTO, topic));
             }
         } else {
             log.error("Nenhum usuario selecionado.");
