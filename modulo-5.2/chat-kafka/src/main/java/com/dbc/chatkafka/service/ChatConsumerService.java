@@ -25,7 +25,7 @@ public class ChatConsumerService {
             topics = "chat-geral",
             groupId = "nicolas",
             containerFactory = "listenerContainerFactoryNicolas",
-            clientIdPrefix = "private")
+            clientIdPrefix = "nicolasGeral")
     public void consumeGeralNicolas(@Payload String message,
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
@@ -39,7 +39,7 @@ public class ChatConsumerService {
             topics = "chat-nicolas",
             groupId = "nicolas",
             containerFactory = "listenerContainerFactoryNicolas",
-            clientIdPrefix = "private")
+            clientIdPrefix = "nicolasPrivado")
     public void consumeNicolas(@Payload String message,
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
@@ -50,8 +50,8 @@ public class ChatConsumerService {
     @KafkaListener(
             topics = "chat-geral",
             groupId = "felipe",
-            containerFactory = "listenerContainerFactoryFelipe",
-            clientIdPrefix = "private")
+            containerFactory = "listenerContainerFactoryNicolas",
+            clientIdPrefix = "felipeGeral")
     public void consumeGeralFelipe(@Payload String message,
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
@@ -64,8 +64,8 @@ public class ChatConsumerService {
     @KafkaListener(
             topics = "chat-felipe",
             groupId = "felipe",
-            containerFactory = "listenerContainerFactoryFelipe",
-            clientIdPrefix = "private")
+            containerFactory = "listenerContainerFactoryNicolas",
+            clientIdPrefix = "felipePrivado")
     public void consumeFelipe(@Payload String message,
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
