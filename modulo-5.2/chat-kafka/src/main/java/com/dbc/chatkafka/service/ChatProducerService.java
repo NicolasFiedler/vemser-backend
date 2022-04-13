@@ -62,7 +62,7 @@ public class ChatProducerService {
             future.addCallback(new ListenableFutureCallback<>() {
                 @Override
                 public void onSuccess(SendResult result) {
-                    log.info(" Log enviado para o kafka com o texto: {} ", finalMensagemJson);
+
                 }
 
                 @Override
