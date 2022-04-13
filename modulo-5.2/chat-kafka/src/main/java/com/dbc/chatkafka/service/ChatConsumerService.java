@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.format.DateTimeFormatter;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class ChatConsumerService {
 
@@ -34,7 +33,7 @@ public class ChatConsumerService {
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
         MensagemDTO mensagemDTO = objectMapper.readValue(message, MensagemDTO.class);
-        log.info("\nUsuario: Nicolas\n{} {}: {}\n", dateTimeFormatter.format(mensagemDTO.getDataCriacao()), mensagemDTO.getUsuario(), mensagemDTO.getMensagem());
+        System.out.println("\nUsuario: Nicolas\n"+dateTimeFormatter.format(mensagemDTO.getDataCriacao())+" "+mensagemDTO.getUsuario()+": "+mensagemDTO.getMensagem()+"\n");
     }
 
     @KafkaListener(
@@ -46,7 +45,7 @@ public class ChatConsumerService {
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
         MensagemDTO mensagemDTO = objectMapper.readValue(message, MensagemDTO.class);
-        log.info("\nUsuario: Nicolas\n{} {}(privada): {}\n", dateTimeFormatter.format(mensagemDTO.getDataCriacao()), mensagemDTO.getUsuario(), mensagemDTO.getMensagem());
+        System.out.println("\nUsuario: Nicolas\n"+dateTimeFormatter.format(mensagemDTO.getDataCriacao())+" "+mensagemDTO.getUsuario()+"(privada): "+mensagemDTO.getMensagem()+"\n");
     }
 
     @KafkaListener(
@@ -58,7 +57,7 @@ public class ChatConsumerService {
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
         MensagemDTO mensagemDTO = objectMapper.readValue(message, MensagemDTO.class);
-        log.info("\nUsuario: Felipe\n{} {}: {}\n", dateTimeFormatter.format(mensagemDTO.getDataCriacao()), mensagemDTO.getUsuario(), mensagemDTO.getMensagem());
+        System.out.println("\nUsuario: Felipe\n"+dateTimeFormatter.format(mensagemDTO.getDataCriacao())+" "+mensagemDTO.getUsuario()+": "+mensagemDTO.getMensagem()+"\n");
     }
 
     @KafkaListener(
@@ -70,6 +69,6 @@ public class ChatConsumerService {
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                         @Header(KafkaHeaders.OFFSET) Long offset) throws JsonProcessingException {
         MensagemDTO mensagemDTO = objectMapper.readValue(message, MensagemDTO.class);
-        log.info("\nUsuario: Felipe\n{} {}(privada): {}\n", dateTimeFormatter.format(mensagemDTO.getDataCriacao()), mensagemDTO.getUsuario(), mensagemDTO.getMensagem());
+        System.out.println("\nUsuario: Felipe\n"+dateTimeFormatter.format(mensagemDTO.getDataCriacao())+" "+mensagemDTO.getUsuario()+"(privada): "+mensagemDTO.getMensagem()+"\n");
     }
 }
