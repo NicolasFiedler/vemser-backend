@@ -15,7 +15,7 @@ public enum Topics {
     GABRIEL("chat-gabriel"),
     GUILHERME("chat-guilherme"),
     GUSTAVO("chat-gustavo"),
-    JOAO("chat-jao"),
+    JOAO("chat-joao"),
     LUCAS("chat-lucas"),
     LUIZ("chat-luiz"),
     MAICON("chat-maicon"),
