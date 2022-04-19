@@ -79,6 +79,13 @@ public class PessoaService {
         }
     }
 
+    @Scheduled(cron = "@monthly")
+    public void sendEmailPromocoes() {
+        for (Pessoa pessoa : pessoaRepository.list()){
+            emailService.sendEmailPromocao(pessoa);
+        }
+    }
+
     @Scheduled(cron = "@daily")
     public void emailAniversario() {
         for (Pessoa pessoa : pessoaRepository.list()){

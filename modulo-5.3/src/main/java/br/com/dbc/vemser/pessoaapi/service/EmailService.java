@@ -92,6 +92,29 @@ public class EmailService {
         emailSender.send(message);
     }
 
+    public void sendEmailPromocao(Pessoa pessoa) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(pessoa.getEmail());
+        message.setSubject("Promocao!!");
+        String texto = "Olá "+pessoa.getNome()+",\n" +
+                "\n" +
+                "Selecionamos alguns dos nossos melhores produtos e criamos esta super promoção na nossa\n" +
+                "plataforma especialmente para você:\n" +
+                "\n" +
+                "- Na compra de 1 CDs do Chitãozinho e Xororó, ganhe 1 do Milionário e José Rico.\n" +
+                "- Na locação de um filme em VHS, a outra locação é grátis\n" +
+                "- Fita de Super Nintendo com 50% de desconto.\n" +
+                "\n" +
+                "Aproveite!\n" +
+                "Magazine OldSchool.\n" +
+                "\n" +
+                "«VEM SER\n" +
+                "DBC";
+        message.setText(texto);
+        emailSender.send(message);
+    }
+
     public void sendEmail(PessoaDTO pessoaDTO, String assunto,String templateName) {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         try {
